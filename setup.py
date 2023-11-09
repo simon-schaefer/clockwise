@@ -11,4 +11,5 @@ setup(
     author_email='simon.k.schaefer@gmail.com',
     packages=find_packages(),
     install_requires=REQUIRED,
+    python_requires='>=3.0'
 )
