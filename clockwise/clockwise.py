@@ -4,10 +4,7 @@ import itertools
 import pathlib
 import time
 
-from loguru import logger
-
-
-__all__ = ['timing', 'print_timings', 'timing_context', 'log_timings']
+__all__ = ['timing', 'print_timings', 'stream_timings', 'timing_context', 'log_timings']
 
 
 time_dict = collections.defaultdict(list)
@@ -50,7 +47,7 @@ class timing_context:
             time_dict[self.identifier].append(dt)
 
 
-def print_timings():
+def stream_timings():
     global time_dict
 
     # Sort the timing dictionary so that the element with the largest cumulative time is at the top.
@@ -77,7 +74,11 @@ def print_timings():
 
         output_str += timing_str + "\n"
 
-    logger.debug(output_str)
+    return output_str
+
+def print_timings():
+    output_str = stream_timings()
+    print(output_str)
 
 
 def log_timings(file_name: pathlib.Path = 'timings.pkl'):
