@@ -1,50 +1,9 @@
-import collections
-import functools
 import itertools
 import pathlib
-import time
 
-__all__ = ['timing', 'print_timings', 'stream_timings', 'timing_context', 'log_timings']
+from .interface import time_dict
 
-
-time_dict = collections.defaultdict(list)
-
-
-def timing(identifier: str):
-    def timer_decorator(f):
-        @functools.wraps(f)
-        def wrap(*args, **kw):
-            if __debug__:  # Only time if not in optimized mode.
-                ts = time.time()
-                result = f(*args, **kw)
-                runtime = time.time() - ts
-
-                global time_dict
-                time_dict[identifier].append(runtime)
-                return result
-            else:
-                return f(*args, **kw)
-
-        return wrap
-    return timer_decorator
-
-
-class timing_context:
-
-    def __init__(self, identifier: str):
-        self.identifier = identifier
-        self.ts = None
-
-    def __enter__(self):
-        if __debug__:
-            self.ts = time.time()
-        return self
-
-    def __exit__(self, type, value, traceback):
-        if __debug__:
-            dt = time.time() - self.ts
-            global time_dict
-            time_dict[self.identifier].append(dt)
+__all__ = ['print_timings', 'stream_timings', 'log_timings']
 
 
 def stream_timings():
@@ -75,6 +34,7 @@ def stream_timings():
         output_str += timing_str + "\n"
 
     return output_str
+
 
 def print_timings():
     output_str = stream_timings()
