@@ -1,11 +1,11 @@
 [build-system]
 build-backend = "setuptools.build_meta" # If not defined, then legacy behavior can happen.
-requires = ["setuptools"] # REQUIRED if [build-system] table is used  
+requires = ["setuptools"] # REQUIRED if [build-system] table is used   
 
 [project]
 name = "clockwise"
 requires-python = ">=3.0"
-version = "1.0.3"
+version = "1.0.4"
 
 description = "A simple timing library for Python"
 readme = "README.md"
