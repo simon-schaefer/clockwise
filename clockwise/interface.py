@@ -29,16 +29,16 @@ def timing(identifier: str):
 
 class timing_context:
 
-    def __init__(self, identifier: str):
+    def __init__(self, identifier: str) -> None:
         self.identifier = identifier
         self.ts = None
 
-    def __enter__(self):
+    def __enter__(self) -> 'timing_context':
         if __debug__:
             self.ts = time.time()
         return self
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, type, value, traceback) -> None:
         if __debug__:
             dt = time.time() - self.ts
             global time_dict

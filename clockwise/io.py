@@ -6,7 +6,7 @@ from .interface import time_dict
 __all__ = ['print_timings', 'stream_timings', 'log_timings']
 
 
-def stream_timings():
+def stream_timings() -> str:
     global time_dict
 
     # Sort the timing dictionary so that the element with the largest cumulative time is at the top.
@@ -36,12 +36,14 @@ def stream_timings():
     return output_str
 
 
-def print_timings():
+def print_timings() -> None:
+    if not __debug__:
+        return
     output_str = stream_timings()
     print(output_str)
 
 
-def log_timings(file_name: pathlib.Path = 'timings.pkl'):
+def log_timings(file_name: pathlib.Path = 'timings.pkl') -> None:
     global time_dict
 
     import pickle as pkl
